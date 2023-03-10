@@ -1,39 +1,48 @@
-import React, { useState } from "react";
-import { Typeahead } from "react-bootstrap-typeahead";
+import React, {useState} from "react";
+import {Typeahead} from "react-bootstrap-typeahead";
+import axios from "axios";
+import {API_URL} from "../../constants";
 
-type Option = {
-    id: number;
-    label: string;
-};
+interface Company {
+    symbol: string;
+    company: string;
+}
 
-type Props = {
-    options: Option[];
-};
+export default function StockPicker() {
+    const [company, setCompany] = useState<Company>();
+    const [companies, setCompanies] = React.useState<Company[]>([]);
 
-const TypeaheadExample: React.FC = () => {
+    React.useEffect(() => {
+        async function fetchCompanies() {
+            try {
+                const response = await axios.get<Company[]>(API_URL + '/lobster/stocks');
+                setCompanies(response.data);
+                return response.data;
+            } catch (error) {
+                console.error(error);
+            }
+        }
 
-    var options: Option[] = [];
-    options.push({id: 1, label: "Facebook"});
-    options.push({id: 2, label: "Google"});
-
-    const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+        fetchCompanies().then(r => console.log(r));
+    }, []);
 
     const handleOptionSelected = (selected: any) => {
-        setSelectedOption(selected[0]);
-        console.log(selected[0]);
+        setCompany(selected[0]);
     };
 
 
     return (
-        <Typeahead
-            id="typeahead-example"
-            labelKey="label"
-            options={options}
-            placeholder="Select an option"
-            selected={selectedOption ? [selectedOption] : []}
-            onChange={handleOptionSelected}
-        />
-    );
-};
-
-export default TypeaheadExample;
+        <>
+            {companies && (
+                <Typeahead
+                    id="typeahead-example"
+                    labelKey="company"
+                    options={companies}
+                    placeholder="Select an option"
+                    selected={company ? [company] : []}
+                    onChange={handleOptionSelected}
+                />
+            )}
+        </>
+    )
+}

@@ -5,7 +5,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import CompanyCard from "../../components/Company";
 import Graph from "../../components/Analytics/Sample/graph";
 import FinTechSnapshot from "../../components/FinTechSnapshot";
-import TypeaheadExample from "../../components/StocksAutocomplete";
+import StockPicker from "../../components/StocksAutocomplete";
 
 function Home() {
 
@@ -20,7 +20,7 @@ function Home() {
                     </Col>
                     <Col md={8} className="p-3">
                         <Graph/>
-                        <TypeaheadExample/>
+                        <StockPicker/>
                         <hr/>
                     </Col>
                 </Row>
