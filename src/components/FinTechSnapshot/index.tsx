@@ -1,18 +1,38 @@
-import {Button, Card, Container, ListGroup, Nav, Navbar, NavDropdown, Offcanvas, Row, Table} from "react-bootstrap";
+import {ListGroup, Row} from "react-bootstrap";
 import React from "react";
+import {StockOverview} from "../../data/models";
+import {API_URL} from "../../constants";
+import axios from "axios";
 
 export default function FinTechSnapshot() {
+    const [stockOverview, setStockOverview] = React.useState<StockOverview>();
+
+    React.useEffect(() => {
+        async function fetchStockOverview() {
+            try {
+                const response = await axios.get<StockOverview>(API_URL + '/lobster/stockoverview/META');
+                setStockOverview(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        fetchStockOverview().then(() => {});
+    }, []);
+
     return (
         <>
-            <Row>
-                <ListGroup variant={"flush"}>
-                    <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                    <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                    <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-                </ListGroup>
-            </Row>
+            {stockOverview && stockOverview.symbol && (
+                <Row>
+                    <ListGroup variant={"flush"}>
+                        <ListGroup.Item>{stockOverview.beta}</ListGroup.Item>
+                        <ListGroup.Item>{stockOverview.address}</ListGroup.Item>
+                        <ListGroup.Item>{stockOverview.asset_type}</ListGroup.Item>
+                        <ListGroup.Item>{stockOverview.book_value}</ListGroup.Item>
+                        <ListGroup.Item>{stockOverview.asset_type}</ListGroup.Item>
+                        <ListGroup.Item>{stockOverview.country}</ListGroup.Item>
+                    </ListGroup>
+                </Row>
+            )}
         </>
     );
 }

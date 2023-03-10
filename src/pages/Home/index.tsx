@@ -5,6 +5,7 @@ import {Col, Container, Row} from "react-bootstrap";
 import CompanyCard from "../../components/Company";
 import Graph from "../../components/Analytics/Sample/graph";
 import FinTechSnapshot from "../../components/FinTechSnapshot";
+import TypeaheadExample from "../../components/StocksAutocomplete";
 
 function Home() {
 
@@ -15,11 +16,12 @@ function Home() {
                 <Row>
                     <Col md={4} className={"p-3"}>
                         <CompanyCard/>
+                        <FinTechSnapshot/>
                     </Col>
                     <Col md={8} className="p-3">
                         <Graph/>
+                        <TypeaheadExample/>
                         <hr/>
-                        <FinTechSnapshot/>
                     </Col>
                 </Row>
             </Container>

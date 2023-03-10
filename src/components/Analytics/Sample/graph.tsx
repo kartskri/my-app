@@ -6,7 +6,6 @@ const Graph: React.FC = () => {
     return (
         <>
             <h2>Bollinger Band</h2>
-            <div className="d-flex p-2 bd-highlight">I'm a flexbox container!</div>
             <p><br/>
                 <Page/>
             </p>
