@@ -54,3 +54,8 @@ export interface StockOverview {
     dividend_date: string;
     ex_dividend_date: string;
 }
+
+export interface Company {
+    symbol: string;
+    company: string;
+}

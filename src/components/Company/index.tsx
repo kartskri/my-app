@@ -4,13 +4,21 @@ import axios from "axios";
 import {API_URL} from "../../constants";
 import {Stock} from "../../data/models";
 
-export default function CompanyCard() {
-    const [stock, setStock] = React.useState<Stock>({symbol: '', company: '', headquarters: ''});
+interface CompanyCardProps {
+    symbol: string;
+}
+
+const CompanyCard: React.FC<CompanyCardProps> = ({symbol}) => {
+    const [stock, setStock] = React.useState<Stock>({symbol: symbol, company: '', headquarters: ''});
+
+    console.log('symbol: ' + symbol);
 
     React.useEffect(() => {
+        console.log('UseEffect');
         async function fetchStock() {
+            console.log(API_URL + '/lobster/stock/' + symbol);
             try {
-                const response = await axios.get<Stock>(API_URL + '/lobster/stock/F');
+                const response = await axios.get<Stock>(API_URL + '/lobster/stock/' + symbol);
                 setStock(response.data)
                 return stock;
             } catch (error) {
@@ -19,7 +27,10 @@ export default function CompanyCard() {
         }
 
         fetchStock().then(() => {});
-    }, []);
+
+    }, [symbol]);
+
+
 
     return (
         <>
@@ -41,3 +52,5 @@ export default function CompanyCard() {
         </>
     );
 }
+
+export default CompanyCard;

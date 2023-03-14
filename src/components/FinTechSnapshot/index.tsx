@@ -3,21 +3,25 @@ import React from "react";
 import {StockOverview} from "../../data/models";
 import {API_URL} from "../../constants";
 import axios from "axios";
+import exp from "constants";
 
-export default function FinTechSnapshot() {
+interface FinTechSnapshotProps {
+    symbol: string;
+}
+const FinTechSnapshot: React.FC<FinTechSnapshotProps> = ({symbol}) => {
     const [stockOverview, setStockOverview] = React.useState<StockOverview>();
 
     React.useEffect(() => {
         async function fetchStockOverview() {
             try {
-                const response = await axios.get<StockOverview>(API_URL + '/lobster/stockoverview/META');
+                const response = await axios.get<StockOverview>(API_URL + '/lobster/stockoverview/' + symbol);
                 setStockOverview(response.data);
             } catch (error) {
                 console.error(error);
             }
         }
         fetchStockOverview().then(() => {});
-    }, []);
+    }, [symbol]);
 
     return (
         <>
@@ -36,3 +40,5 @@ export default function FinTechSnapshot() {
         </>
     );
 }
+
+export default FinTechSnapshot;
