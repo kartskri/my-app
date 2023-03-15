@@ -41,6 +41,14 @@ const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
             lineStyle: {
                 width: 1
             }
+        }, {
+            type: 'line',
+            data: data.map((point) => [point.date, point.value+10]),
+            showSymbol: false,
+            hoverAnimation: false,
+            lineStyle: {
+                width: 1
+            }
         }]
     };
 

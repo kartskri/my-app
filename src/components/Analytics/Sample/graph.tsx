@@ -28,7 +28,6 @@ const Graph: React.FC<GraphProps> = ({company}) => {
                         }
                         data.push(new ChartData(temp.date, temp.sma_20))
                     }
-                    console.log(data)
                     return response.data;
                 } catch (error) {
                     console.error(error);
