@@ -5,13 +5,13 @@ import {ChartData, Company, SMA, Stock} from "../../../data/models";
 import {API_URL} from "../../../constants";
 
 interface GraphProps {
-    symbol: string;
+    company: Company;
 }
 
 let data: any[] = []
 let apiUrl = '';
 
-const Graph: React.FC<GraphProps> = ({symbol}) => {
+const Graph: React.FC<GraphProps> = ({company}) => {
     const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
 
 
@@ -35,15 +35,15 @@ const Graph: React.FC<GraphProps> = ({symbol}) => {
                 }
             }
 
-            fetchSMAData(symbol).then(r => {
+            fetchSMAData(company.symbol).then(r => {
                 console.log(data.length)
             });
         },
-        [symbol]);
+        [company.symbol]);
 
     return (
         <>
-            <h2>{symbol} - {apiUrl}</h2>
+            <h2>{company.symbol} - {apiUrl}</h2>
             {data && data.length > 0 && (
                 <div>
                     <p>

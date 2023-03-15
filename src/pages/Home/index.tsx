@@ -26,7 +26,7 @@ const Home: React.FC = () => {
                         <FinTechSnapshot symbol={company.symbol}/>
                     </Col>
                     <Col md={8} className="p-3">
-                        <Graph symbol={company.symbol} />
+                        <Graph company={company} />
                         <hr/>
                         <StockPicker title={"Select a stock"} companyChanged={handleCompanyChange}/>
                     </Col>
