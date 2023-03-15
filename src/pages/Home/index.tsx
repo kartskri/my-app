@@ -5,8 +5,8 @@ import {Col, Container, Row} from "react-bootstrap";
 import CompanyCard from "../../components/Company";
 import Graph from "../../components/Analytics/Sample/graph";
 import FinTechSnapshot from "../../components/FinTechSnapshot";
-import StockPicker from "../../components/StocksAutocomplete";
 import {Company} from "../../data/models";
+import StockPicker from "../../components/StocksAutocomplete";
 
 const Home: React.FC = () => {
     const [company, setCompany] = React.useState<Company>({symbol: 'AAPL', company: 'Apple Inc.'});
@@ -26,9 +26,9 @@ const Home: React.FC = () => {
                         <FinTechSnapshot symbol={company.symbol}/>
                     </Col>
                     <Col md={8} className="p-3">
-                        <Graph/>
-                        <StockPicker title="Stock Picker 2" companyChanged={handleCompanyChange}/>
+                        <Graph symbol={company.symbol} />
                         <hr/>
+                        <StockPicker title={"Select a stock"} companyChanged={handleCompanyChange}/>
                     </Col>
                 </Row>
             </Container>

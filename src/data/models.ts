@@ -59,3 +59,21 @@ export interface Company {
     symbol: string;
     company: string;
 }
+
+export interface SMA {
+    id: string;
+    date: string;
+    symbol: string;
+    sma_20: string;
+    sma_200: string;
+}
+
+export class ChartData {
+    date: string;
+    value: number;
+
+    public constructor(date: string, value: any) {
+        this.date = date;
+        this.value = Number(value);
+    }
+}
