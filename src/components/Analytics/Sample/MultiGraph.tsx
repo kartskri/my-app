@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import {TimeSeriesPoint} from "../../../data/models";
+import {Company, TimeSeriesPoint} from "../../../data/models";
 import {INIT_CHART_OPTIONS} from "../../../services/constants";
 
 type DataPoint = {
@@ -9,18 +9,21 @@ type DataPoint = {
 }
 
 type MultiGraphProps = {
+    company: Company;
     data: TimeSeriesPoint[][];
 }
 
-const MultiGraph: React.FC<MultiGraphProps> = ({data}) => {
-    const [seriesPop, setSeriesPop] = React.useState<boolean>(false);
-    const [option, setOption] = React.useState<any>(INIT_CHART_OPTIONS);
+const MultiGraph: React.FC<MultiGraphProps> = ({company, data}) => {
+    const [loading, setLoading] = React.useState<any>(true);
+    const [chartSeries, setChartSeries] = React.useState<any>([]);
+    const [option, setOption] = React.useState<any>(null);
 
 
     React.useEffect(() => {
         async function populateSeries() {
+            let seriesLst: any[] = [];
             data.map((timeSeriesPoints: TimeSeriesPoint[]) => {
-                option.series.push({
+                seriesLst.push({
                     "type": "line",
                     "data": timeSeriesPoints.map((point: TimeSeriesPoint) => [point.date, point.value]),
                     "showSymbol": false,
@@ -30,20 +33,24 @@ const MultiGraph: React.FC<MultiGraphProps> = ({data}) => {
                     }
                 });
             });
+            return seriesLst;
         }
 
-        populateSeries().then(() => {
-            console.log("Populating series");
-            setSeriesPop(true);
-            console.log("Populating series Done");
-            console.log("options.series: ", JSON.stringify(option.series));
+        populateSeries().then((sdata) => {
+            setLoading(true);
+            setChartSeries([])
+            setChartSeries(sdata);
+            let dummyOption = INIT_CHART_OPTIONS;
+            dummyOption.series = sdata;
+            setOption(dummyOption);
+            setLoading(false);
         });
-    });
+    }, [company.symbol, data, loading]);
 
 
     return (
         <>
-            {seriesPop && option.series.length > 0 && (
+            {option && option.series && (
                 <ReactEcharts option={option}/>
             )}
         </>

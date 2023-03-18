@@ -38,7 +38,7 @@ const Graph: React.FC<GraphProps> = ({company}) => {
                 <div>
                     <p>
                         <SingleGraph data={sma20}/>
-                        <MultiGraph data={[sma20, sma200]}/>
+                        <MultiGraph company={company} data={[sma20, sma200]}/>
                     </p>
                     <h3>Inference</h3>
                     <p>
