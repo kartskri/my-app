@@ -1,9 +1,6 @@
 import {ListGroup, Row} from "react-bootstrap";
 import React from "react";
 import {StockOverview} from "../../data/models";
-import {API_URL} from "../../constants";
-import axios from "axios";
-import exp from "constants";
 import {fetchStockOverview} from "../../services/api";
 
 interface FinTechSnapshotProps {

@@ -1,6 +1,5 @@
-import {Col, Row} from "react-bootstrap";
+import {Row} from "react-bootstrap";
 import React from "react";
-import Card from "react-bootstrap/Card";
 
 const QuickLinks: React.FC = () => {
     return (

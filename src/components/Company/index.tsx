@@ -1,7 +1,5 @@
 import {Col, Row} from "react-bootstrap";
 import React from "react";
-import axios from "axios";
-import {API_URL} from "../../constants";
 import {Stock} from "../../data/models";
 import {fetchStock} from "../../services/api";
 
@@ -29,8 +27,6 @@ const CompanyCard: React.FC<CompanyCardProps> = ({symbol}) => {
                         Some quick example text to build on the card title and make up the
                         bulk of the card's content.
                     </p>
-                    <a href="#">Card Link</a>
-                    <a href="#">Another Link</a>
                 </Row>
             )}
             <Row>

@@ -1,8 +1,5 @@
 import React, {useState} from "react";
 import {Typeahead} from "react-bootstrap-typeahead";
-import axios from "axios";
-import {API_URL} from "../../constants";
-import exp from "constants";
 import {Company} from "../../data/models";
 import {fetchStocks} from "../../services/api";
 

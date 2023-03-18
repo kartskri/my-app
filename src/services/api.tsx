@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import {ChartData, SMA, Stock, StockOverview} from "../data/models";
+import axios, {AxiosResponse} from 'axios';
+import {SMA, Stock, StockOverview} from "../data/models";
 import {API_URL} from "../constants";
 
 export const fetchStocks = async (): Promise<Stock[]> => {

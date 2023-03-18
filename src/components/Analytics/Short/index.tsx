@@ -1,4 +1,4 @@
-import {Button, Card, Container, Nav, Navbar, NavDropdown, Offcanvas, Table} from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import React from "react";
 
 export default function ShortTermGraph() {
