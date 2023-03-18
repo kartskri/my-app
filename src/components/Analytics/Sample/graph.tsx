@@ -10,22 +10,25 @@ interface GraphProps {
 let data: GraphData[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
-    const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
+    const [dataLoaded, setDataLoaded] = React.useState<boolean>(false);
 
     React.useEffect(() => {
         data = [];
+        alert(company.symbol  + ' ' + dataLoaded);
         techSMAChartData(company.symbol, 'line').then(graphData => {
             data = graphData;
+            setDataLoaded(true);
+            alert(dataLoaded)
         });
     }, [company.symbol]);
 
     return (
         <>
             <h2>{company.symbol}</h2>
-            {data && data.length > 0 && (
+            {dataLoaded && data && data.length > 0 && (
                 <div>
                     <p>
-                        <TimeSeriesGraph graphData={data}/>
+                        <TimeSeriesGraph graphData={data} />
                     </p>
                     <h3>Inference</h3>
                     <p>
