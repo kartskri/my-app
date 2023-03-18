@@ -18,7 +18,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({symbol}) => {
         async function fetchStock() {
             console.log(API_URL + '/lobster/stock/' + symbol);
             try {
-                const response = await axios.get<Stock>(API_URL + '/lobster/stock/' + symbol);
+                const response = await axios.get<Stock>(API_URL + '/stock/' + symbol);
                 setStock(response.data)
                 return stock;
             } catch (error) {

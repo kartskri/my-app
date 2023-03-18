@@ -18,7 +18,7 @@ const Graph: React.FC<GraphProps> = ({company}) => {
     React.useEffect(() => {
             async function fetchSMAData(symbol: string) {
                 try {
-                    apiUrl = API_URL + '/lobster/sma/' + symbol;
+                    apiUrl = API_URL + '/tech/' + symbol + '/sma'
                     const response = await axios.get<SMA[]>(apiUrl);
                     setSmaLst(response.data);
                     for (let i = 0; i < response.data.length; i++) {

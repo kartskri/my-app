@@ -1,3 +1,3 @@
-// export const API_URL = 'https://4mgknqtn7qli5fbtjxjrzowpw40kjlfr.lambda-url.us-east-1.on.aws';
+export const API_URL = 'https://0v08hg9dn6.execute-api.us-east-1.amazonaws.com/dev';
 
-export const API_URL = 'http://localhost:8000';
+// export const API_URL = 'http://localhost:8000';
