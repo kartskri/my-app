@@ -1,7 +1,7 @@
 import React from "react";
 import SingleGraph from "./SingleGraph";
 import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
-import {techSMA, techSMAChartData} from "../../../services/api";
+import {techSMAChartData} from "../../../services/api";
 import MultiGraph from "./MultiGraph";
 
 interface GraphProps {
@@ -12,7 +12,6 @@ let sma20: TimeSeriesPoint[] = []
 let sma200: TimeSeriesPoint[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
-    const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
     const [smaChartData, setSmaChartData] = React.useState<TimeSeriesPoint[][]>([[], []]);
 
     React.useEffect(() => {
@@ -34,7 +33,7 @@ const Graph: React.FC<GraphProps> = ({company}) => {
     return (
         <>
             <h2>{company.symbol}</h2>
-            {sma20.length > 0 && sma200.length > 0 && (
+            {smaChartData && sma20.length > 0 && sma200.length > 0 && (
                 <div>
                     <p>
                         <SingleGraph data={sma20}/>

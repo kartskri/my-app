@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios';
-import {GraphData, SMA, Stock, StockOverview, TimeSeriesPoint} from "../data/models";
+import {Bollinger, Exponential, RSI, SMA, Stock, StockOverview, StockQuote, TimeSeriesPoint} from "../data/models";
 import {API_URL} from "../constants";
 
 export const fetchStocks = async (): Promise<Stock[]> => {
@@ -28,6 +28,69 @@ export const techSMAChartData = async (symbol: string, chartType: string): Promi
         dataPoint.forEach((chartDataPoint: SMA) => {
             graphData[0].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
             graphData[1].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
+        });
+        return graphData;
+    });
+}
+
+export const techBollinger = async (symbol: string): Promise<Bollinger[]> => {
+    const response: AxiosResponse<Bollinger[]> = await axios.get(API_URL + '/tech/' + symbol + '/bollinger');
+    return response.data;
+}
+
+export const techBollingerChartData = async (symbol: string): Promise<TimeSeriesPoint[][]> => {
+    let graphData: TimeSeriesPoint[][] = [[], []];
+    return techBollinger(symbol).then((dataPoint: Bollinger[]) => {
+        dataPoint.forEach((chartDataPoint: Bollinger) => {
+            graphData[0].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.bollingerUpper));
+            graphData[1].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.bollingerLower));
+        });
+        return graphData;
+    });
+}
+
+export const techExponential = async (symbol: string): Promise<Exponential[]> => {
+    const response: AxiosResponse<Exponential[]> = await axios.get(API_URL + '/tech/' + symbol + '/exponential');
+    return response.data;
+}
+
+export const techExponentialChartData = async (symbol: string): Promise<TimeSeriesPoint[][]> => {
+    let graphData: TimeSeriesPoint[][] = [[], [], []];
+    return techExponential(symbol).then((dataPoint: Exponential[]) => {
+        dataPoint.forEach((chartDataPoint: Exponential) => {
+            graphData[0].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.ema_20));
+            graphData[1].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.ema_200));
+            graphData[2].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.cum_ma));
+        });
+        return graphData;
+    });
+}
+
+export const techRSA = async (symbol: string): Promise<RSI[]> => {
+    const response: AxiosResponse<RSI[]> = await axios.get(API_URL + '/tech/' + symbol + '/rsi');
+    return response.data;
+}
+
+export const techRSAChartData = async (symbol: string): Promise<TimeSeriesPoint[][]> => {
+    let graphData: TimeSeriesPoint[][] = [[]];
+    return techRSA(symbol).then((dataPoint: RSI[]) => {
+        dataPoint.forEach((chartDataPoint: RSI) => {
+            graphData[0].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.rsi));
+        });
+        return graphData;
+    });
+}
+
+export const stockQuote = async (symbol: string): Promise<StockQuote[]> => {
+    const response: AxiosResponse<StockQuote[]> = await axios.get(API_URL + '/quote/' + symbol + '/dates/2022-09-01/2020-12-31');
+    return response.data;
+}
+
+export const stockQuoteChartData = async (symbol: string): Promise<TimeSeriesPoint[][]> => {
+    let graphData: TimeSeriesPoint[][] = [[]];
+    return stockQuote(symbol).then((dataPoint: StockQuote[]) => {
+        dataPoint.forEach((quote: StockQuote) => {
+            graphData[0].push(new TimeSeriesPoint(quote.date, quote.adjusted_close));
         });
         return graphData;
     });

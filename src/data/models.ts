@@ -68,6 +68,44 @@ export interface SMA {
     sma_200: number;
 }
 
+export interface Exponential {
+    id: string;
+    date: string;
+    symbol: string;
+    ema_20: number;
+    ema_200: number;
+    cum_ma: number;
+}
+
+export interface Bollinger {
+    id: string;
+    date: string;
+    symbol: string;
+    bollingerUpper: number;
+    bollingerLower: number;
+}
+
+export interface RSI {
+    id: string;
+    date: string;
+    symbol: string;
+    rsi: number;
+}
+
+export interface StockQuote {
+    id: number
+    adjusted_close: number
+    close: number
+    date: string
+    dividend: number
+    high: number
+    low: number
+    open: number
+    splitCoeff: number
+    symbol: string
+    volume: number
+}
+
 export class GraphData {
     title: string;
     chartType: string;

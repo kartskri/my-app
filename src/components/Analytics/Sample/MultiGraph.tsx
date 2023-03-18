@@ -1,12 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {Company, TimeSeriesPoint} from "../../../data/models";
-import {INIT_CHART_OPTIONS} from "../../../services/constants";
-
-type DataPoint = {
-    date: string;
-    value: number;
-}
 
 type MultiGraphProps = {
     company: Company;

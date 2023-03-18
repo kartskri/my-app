@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AppNavbar from "../../components/Navbar";
 import {Col, Container, Row} from "react-bootstrap";
 import CompanyCard from "../../components/Company";
-import Graph from "../../components/Analytics/Sample/graph";
+import Graph from "../../components/Analytics/Sample/Graph";
 import FinTechSnapshot from "../../components/FinTechSnapshot";
 import {Company} from "../../data/models";
 import StockPicker from "../../components/StocksAutocomplete";
