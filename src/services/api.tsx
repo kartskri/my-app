@@ -22,17 +22,13 @@ export const techSMA = async (symbol: string): Promise<SMA[]> => {
     return response.data;
 }
 
-export const techSMAChartData = async (symbol: string, chartType: string): Promise<GraphData[]> => {
-    console.log('techSMAChartData');
-    let graphData: GraphData[] = [];
-    graphData[0] = new GraphData('SMA 20', 'line');
-    graphData[1] = new GraphData('SMA 200', 'line');
-    techSMA(symbol).then(dataPoint => {
+export const techSMAChartData = async (symbol: string, chartType: string): Promise<TimeSeriesPoint[][]> => {
+    let graphData: TimeSeriesPoint[][] = [[], []];
+    return techSMA(symbol).then((dataPoint: SMA[]) => {
         dataPoint.forEach((chartDataPoint: SMA) => {
-            graphData[0].dataPoints.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
-            graphData[1].dataPoints.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
+            graphData[0].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
+            graphData[1].push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
         });
+        return graphData;
     });
-    console.log(graphData);
-    return graphData;
 }

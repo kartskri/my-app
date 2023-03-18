@@ -1,7 +1,7 @@
 import React from "react";
 import TimeSeriesGraph from "./index";
 import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
-import {techSMA} from "../../../services/api";
+import {techSMA, techSMAChartData} from "../../../services/api";
 
 interface GraphProps {
     company: Company;
@@ -12,24 +12,28 @@ let sma200: TimeSeriesPoint[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
     const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
+    const [smaChartData, setSmaChartData] = React.useState<TimeSeriesPoint[][]>([[], []]);
 
     React.useEffect(() => {
         sma20 = [];
         sma200 = [];
-        techSMA(company.symbol).then(chartDataPoints => {
-            console.log(chartDataPoints);
-            setSmaLst(chartDataPoints);
-            chartDataPoints.forEach((chartDataPoint: any) => {
-                sma20.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
-                sma200.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
+        techSMAChartData(company.symbol, 'line').then(graphData => {
+            setSmaChartData(graphData);
+            graphData[0].forEach((chartDataPoint: TimeSeriesPoint) => {
+                sma20.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.value));
+            });
+            graphData[1].forEach((chartDataPoint: TimeSeriesPoint) => {
+                sma200.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.value));
             });
         });
+
+
     }, [company.symbol]);
 
     return (
         <>
             <h2>{company.symbol}</h2>
-            {sma20 && sma20.length > 0 && (
+            {sma20.length > 0 && sma200.length > 0 && (
                 <div>
                     <p>
                         <TimeSeriesGraph data={sma20}/>
