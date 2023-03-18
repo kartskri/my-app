@@ -7,18 +7,21 @@ interface GraphProps {
     company: Company;
 }
 
-let data: TimeSeriesPoint[] = []
+let sma20: TimeSeriesPoint[] = []
+let sma200: TimeSeriesPoint[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
     const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
 
     React.useEffect(() => {
-        data = [];
+        sma20 = [];
+        sma200 = [];
         techSMA(company.symbol).then(chartDataPoints => {
             console.log(chartDataPoints);
             setSmaLst(chartDataPoints);
             chartDataPoints.forEach((chartDataPoint: any) => {
-                data.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
+                sma20.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
+                sma200.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
             });
         });
     }, [company.symbol]);
@@ -26,10 +29,11 @@ const Graph: React.FC<GraphProps> = ({company}) => {
     return (
         <>
             <h2>{company.symbol}</h2>
-            {data && data.length > 0 && (
+            {sma20 && sma20.length > 0 && (
                 <div>
                     <p>
-                        <TimeSeriesGraph data={data}/>
+                        <TimeSeriesGraph data={sma20}/>
+                        <TimeSeriesGraph data={sma200}/>
                     </p>
                     <h3>Inference</h3>
                     <p>
