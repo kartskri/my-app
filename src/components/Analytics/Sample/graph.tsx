@@ -1,27 +1,23 @@
 import React from "react";
 import TimeSeriesGraph from "./index";
-import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
-import {techSMA} from "../../../services/api";
+import {Company, GraphData, SMA} from "../../../data/models";
+import {techSMAChartData} from "../../../services/api";
 
 interface GraphProps {
     company: Company;
 }
 
-let data: TimeSeriesPoint[] = []
+let data: GraphData[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
     const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
 
     React.useEffect(() => {
-            data = [];
-            techSMA(company.symbol).then(dataPoint => {
-                console.log(dataPoint);
-                setSmaLst(dataPoint);
-                dataPoint.forEach((chartDataPoint: any) => {
-                    data.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
-                });
-            });
-        }, [company.symbol]);
+        data = [];
+        techSMAChartData(company.symbol, 'line').then(graphData => {
+            data = graphData;
+        });
+    }, [company.symbol]);
 
     return (
         <>
@@ -29,7 +25,7 @@ const Graph: React.FC<GraphProps> = ({company}) => {
             {data && data.length > 0 && (
                 <div>
                     <p>
-                        <TimeSeriesGraph data={data}/>
+                        <TimeSeriesGraph graphData={data}/>
                     </p>
                     <h3>Inference</h3>
                     <p>

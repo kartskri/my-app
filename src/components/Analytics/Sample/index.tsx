@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import {TimeSeriesPoint} from "../../../data/models";
+import {GraphData, TimeSeriesPoint} from "../../../data/models";
 
 type DataPoint = {
     date: string;
@@ -8,12 +8,11 @@ type DataPoint = {
 }
 
 type TimeSeriesGraphProps = {
-    data: TimeSeriesPoint[];
+    graphData: GraphData[];
 }
 
-const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
-    console.log('Inside TimeSeriesGraph' + data.length);
-    const options = {
+const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ graphData }) => {
+    let options = {
         tooltip: {
             trigger: 'axis',
             axisPointer: {
@@ -33,24 +32,21 @@ const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
                 show: false
             }
         },
-        series: [{
-            type: 'line',
-            data: data.map((point) => [point.date, point.value]),
-            showSymbol: false,
-            hoverAnimation: false,
-            lineStyle: {
-                width: 1
-            }
-        }, {
-            type: 'line',
-            data: data.map((point) => [point.date, point.value+10]),
-            showSymbol: false,
-            hoverAnimation: false,
-            lineStyle: {
-                width: 1
-            }
-        }]
+        series: [] as any[]
     };
+
+    graphData.forEach((graphDataPoint: GraphData) => {
+        let temp_series: any = {
+            "type": graphDataPoint.chartType,
+            "data": graphDataPoint.dataPoints.map((point: TimeSeriesPoint) => [point.date, point.value]),
+            "showSymbol": false,
+            "hoverAnimation": false,
+            "lineStyle": {
+                "width": 1
+            }
+        };
+        options.series.push(temp_series)
+    });
 
     return (
         <ReactEcharts option={options} />

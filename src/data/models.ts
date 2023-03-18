@@ -64,16 +64,28 @@ export interface SMA {
     id: string;
     date: string;
     symbol: string;
-    sma_20: string;
-    sma_200: string;
+    sma_20: number;
+    sma_200: number;
+}
+
+export class GraphData {
+    title: string;
+    chartType: string;
+    dataPoints: TimeSeriesPoint[];
+
+    public constructor(title: string, chartType: string) {
+        this.title = title;
+        this.chartType = chartType;
+        this.dataPoints = [];
+    }
 }
 
 export class TimeSeriesPoint {
     date: string;
     value: number;
 
-    public constructor(date: string, value: any) {
+    public constructor(date: string, value: number) {
         this.date = date;
-        this.value = Number(value);
+        this.value = value;
     }
 }
