@@ -68,7 +68,7 @@ export interface SMA {
     sma_200: string;
 }
 
-export class ChartData {
+export class TimeSeriesPoint {
     date: string;
     value: number;
 

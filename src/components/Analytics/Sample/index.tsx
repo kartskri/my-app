@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactEcharts from 'echarts-for-react';
-import {ChartData} from "../../../data/models";
+import {TimeSeriesPoint} from "../../../data/models";
 
 type DataPoint = {
     date: string;
@@ -8,7 +8,7 @@ type DataPoint = {
 }
 
 type TimeSeriesGraphProps = {
-    data: ChartData[];
+    data: TimeSeriesPoint[];
 }
 
 const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
