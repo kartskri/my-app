@@ -3,6 +3,7 @@ import React from "react";
 import axios from "axios";
 import {API_URL} from "../../constants";
 import {Stock} from "../../data/models";
+import {fetchStock} from "../../services/api";
 
 interface CompanyCardProps {
     symbol: string;
@@ -10,24 +11,10 @@ interface CompanyCardProps {
 
 const CompanyCard: React.FC<CompanyCardProps> = ({symbol}) => {
     const [stock, setStock] = React.useState<Stock>({symbol: symbol, company: '', headquarters: ''});
-
-    console.log('symbol: ' + symbol);
-
     React.useEffect(() => {
-        console.log('UseEffect');
-        async function fetchStock() {
-            console.log(API_URL + '/lobster/stock/' + symbol);
-            try {
-                const response = await axios.get<Stock>(API_URL + '/stock/' + symbol);
-                setStock(response.data)
-                return stock;
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        fetchStock().then(() => {});
-
+        fetchStock(symbol).then((data) => {
+            setStock(data);
+        });
     }, [symbol]);
 
 

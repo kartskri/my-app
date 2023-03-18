@@ -4,6 +4,7 @@ import axios from "axios";
 import {API_URL} from "../../constants";
 import exp from "constants";
 import {Company} from "../../data/models";
+import {fetchStocks} from "../../services/api";
 
 interface StockPickerProps {
     title: string;
@@ -15,17 +16,9 @@ const StockPicker: React.FC<StockPickerProps> = ({title, companyChanged}) => {
     const [companies, setCompanies] = React.useState<Company[]>([]);
 
     React.useEffect(() => {
-        async function fetchCompanies() {
-            try {
-                const response = await axios.get<Company[]>(API_URL + '/stocks');
-                setCompanies(response.data);
-                return response.data;
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        fetchCompanies().then(r => {});
+        fetchStocks().then(data => {
+            setCompanies(data);
+        });
     }, []);
 
     const handleOptionSelected = (selected: any) => {

@@ -4,6 +4,7 @@ import {StockOverview} from "../../data/models";
 import {API_URL} from "../../constants";
 import axios from "axios";
 import exp from "constants";
+import {fetchStockOverview} from "../../services/api";
 
 interface FinTechSnapshotProps {
     symbol: string;
@@ -12,15 +13,9 @@ const FinTechSnapshot: React.FC<FinTechSnapshotProps> = ({symbol}) => {
     const [stockOverview, setStockOverview] = React.useState<StockOverview>();
 
     React.useEffect(() => {
-        async function fetchStockOverview() {
-            try {
-                const response = await axios.get<StockOverview>(API_URL + '/lobster/stockoverview/' + symbol);
-                setStockOverview(response.data);
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        fetchStockOverview().then(() => {});
+        fetchStockOverview(symbol).then((data) => {
+            setStockOverview(data);
+        });
     }, [symbol]);
 
     return (

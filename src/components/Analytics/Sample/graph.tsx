@@ -1,48 +1,31 @@
-import React, {useState} from "react";
+import React from "react";
 import TimeSeriesGraph from "./index";
-import axios from "axios";
-import {ChartData, Company, SMA, Stock} from "../../../data/models";
-import {API_URL} from "../../../constants";
+import {ChartData, Company, SMA} from "../../../data/models";
+import {techSMA} from "../../../services/api";
 
 interface GraphProps {
     company: Company;
 }
 
-let data: any[] = []
-let apiUrl = '';
+let data: ChartData[] = []
 
 const Graph: React.FC<GraphProps> = ({company}) => {
     const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
 
-
     React.useEffect(() => {
-            async function fetchSMAData(symbol: string) {
-                try {
-                    apiUrl = API_URL + '/tech/' + symbol + '/sma'
-                    const response = await axios.get<SMA[]>(apiUrl);
-                    setSmaLst(response.data);
-                    for (let i = 0; i < response.data.length; i++) {
-                        let temp = response.data[i]
-                        if (i == 0) {
-                            data = []
-                        }
-                        data.push(new ChartData(temp.date, temp.sma_20))
-                    }
-                    return response.data;
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            fetchSMAData(company.symbol).then(r => {
-                console.log(data.length)
+            data = [];
+            techSMA(company.symbol).then(chartDataPoints => {
+                console.log(chartDataPoints);
+                setSmaLst(chartDataPoints);
+                chartDataPoints.forEach((chartDataPoint: any) => {
+                    data.push(new ChartData(chartDataPoint.date, chartDataPoint.sma_20));
+                });
             });
-        },
-        [company.symbol]);
+        }, [company.symbol]);
 
     return (
         <>
-            <h2>{company.symbol} - {apiUrl}</h2>
+            <h2>{company.symbol}</h2>
             {data && data.length > 0 && (
                 <div>
                     <p>
@@ -53,7 +36,7 @@ const Graph: React.FC<GraphProps> = ({company}) => {
                         Inference of the graph is that the stock price is in the range of 100 to 200.
                     </p>
                 </div>
-                )}
+            )}
         </>
     );
 };
