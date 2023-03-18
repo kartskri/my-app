@@ -1,7 +1,8 @@
 import React from "react";
-import TimeSeriesGraph from "./index";
+import SingleGraph from "./SingleGraph";
 import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
 import {techSMA, techSMAChartData} from "../../../services/api";
+import MultiGraph from "./MultiGraph";
 
 interface GraphProps {
     company: Company;
@@ -36,8 +37,8 @@ const Graph: React.FC<GraphProps> = ({company}) => {
             {sma20.length > 0 && sma200.length > 0 && (
                 <div>
                     <p>
-                        <TimeSeriesGraph data={sma20}/>
-                        <TimeSeriesGraph data={sma200}/>
+                        <SingleGraph data={sma20}/>
+                        <MultiGraph data={[sma20, sma200]}/>
                     </p>
                     <h3>Inference</h3>
                     <p>

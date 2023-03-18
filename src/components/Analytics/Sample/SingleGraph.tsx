@@ -2,16 +2,11 @@ import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import {TimeSeriesPoint} from "../../../data/models";
 
-type DataPoint = {
-    date: string;
-    value: number;
-}
-
-type TimeSeriesGraphProps = {
+type SingleGraphProps = {
     data: TimeSeriesPoint[];
 }
 
-const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
+const SingleGraph: React.FC<SingleGraphProps> = ({ data }) => {
     const options = {
         tooltip: {
             trigger: 'axis',
@@ -48,4 +43,4 @@ const TimeSeriesGraph: React.FC<TimeSeriesGraphProps> = ({ data }) => {
     );
 };
 
-export default TimeSeriesGraph;
+export default SingleGraph;
