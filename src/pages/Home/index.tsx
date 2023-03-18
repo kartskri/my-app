@@ -28,7 +28,7 @@ const Home: React.FC = () => {
                     <Col md={8} className="p-3">
                         <StockPicker title={"Select a stock"} companyChanged={handleCompanyChange}/>
                         <br/>
-                        <Graph symbol={company.symbol} company={company} />
+                        <Graph company={company} />
                         <hr/>
                     </Col>
                 </Row>

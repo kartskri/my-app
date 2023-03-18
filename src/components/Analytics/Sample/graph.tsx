@@ -1,33 +1,36 @@
 import React from "react";
 import TimeSeriesGraph from "./index";
-import {Company, GraphData, SMA} from "../../../data/models";
-import {techSMAChartData} from "../../../services/api";
+import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
+import {techSMA} from "../../../services/api";
 
 interface GraphProps {
-    symbol: string;
     company: Company;
 }
 
-let data: GraphData[] = []
+let data: TimeSeriesPoint[] = []
 
-const Graph: React.FC<GraphProps> = ({symbol, company}) => {
-    // const [gdata, setGdata] = React.useState<GraphData[]>([]);
+const Graph: React.FC<GraphProps> = ({company}) => {
+    const [smaLst, setSmaLst] = React.useState<SMA[]>([]);
 
     React.useEffect(() => {
-        techSMAChartData(symbol, 'line').then(graphData => {
-            data = graphData;
-            console.log(graphData);
-            // setGdata(graphData);
-            // console.log(gdata);
+        data = [];
+        techSMA(company.symbol).then(chartDataPoints => {
+            console.log(chartDataPoints);
+            setSmaLst(chartDataPoints);
+            chartDataPoints.forEach((chartDataPoint: any) => {
+                data.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_20));
+            });
         });
-    }, [symbol]);
+    }, [company.symbol]);
 
     return (
         <>
-            <h2>{company.company}</h2>
+            <h2>{company.symbol}</h2>
             {data && data.length > 0 && (
                 <div>
-                    <TimeSeriesGraph data={data[0].dataPoints} />
+                    <p>
+                        <TimeSeriesGraph data={data}/>
+                    </p>
                     <h3>Inference</h3>
                     <p>
                         Inference of the graph is that the stock price is in the range of 100 to 200.
