@@ -14,47 +14,45 @@ type MultiGraphProps = {
 }
 
 const MultiGraph: React.FC<MultiGraphProps> = ({company, data}) => {
-    const [loading, setLoading] = React.useState<any>(true);
-    const [chartSeries, setChartSeries] = React.useState<any>([]);
-    const [option, setOption] = React.useState<any>(null);
+    const options = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                animation: false
+            }
+        },
+        xAxis: {
+            type: 'time',
+            splitLine: {
+                show: false
+            }
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%'],
+            splitLine: {
+                show: false
+            }
+        },
+        series: data.map((timeSeriesPoints: TimeSeriesPoint[]) => {
+            return {
+                type: 'line',
+                data: timeSeriesPoints.map((point: TimeSeriesPoint) => [point.date, point.value]),
+                showSymbol: false,
+                hoverAnimation: false,
+                lineStyle: {
+                    width: 1
+                }
+            }
+        })
+    };
 
-
-    React.useEffect(() => {
-        async function populateSeries() {
-            let seriesLst: any[] = [];
-            data.map((timeSeriesPoints: TimeSeriesPoint[]) => {
-                seriesLst.push({
-                    "type": "line",
-                    "data": timeSeriesPoints.map((point: TimeSeriesPoint) => [point.date, point.value]),
-                    "showSymbol": false,
-                    "hoverAnimation": false,
-                    "lineStyle": {
-                        "width": 1
-                    }
-                });
-            });
-            return seriesLst;
-        }
-
-        populateSeries().then((sdata) => {
-            setLoading(true);
-            setChartSeries([])
-            setChartSeries(sdata);
-            let dummyOption = INIT_CHART_OPTIONS;
-            dummyOption.series = sdata;
-            setOption(dummyOption);
-            setLoading(false);
-        });
-    }, [company.symbol, data, loading]);
-
+    console.log(options);
 
     return (
-        <>
-            {option && option.series && (
-                <ReactEcharts option={option}/>
-            )}
-        </>
+        <ReactEcharts option={options} />
     );
-}
+
+};
 
 export default MultiGraph;
