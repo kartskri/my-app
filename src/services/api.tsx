@@ -23,6 +23,7 @@ export const techSMA = async (symbol: string): Promise<SMA[]> => {
 }
 
 export const techSMAChartData = async (symbol: string, chartType: string): Promise<GraphData[]> => {
+    console.log('techSMAChartData');
     let graphData: GraphData[] = [];
     graphData[0] = new GraphData('SMA 20', 'line');
     graphData[1] = new GraphData('SMA 200', 'line');
@@ -32,5 +33,6 @@ export const techSMAChartData = async (symbol: string, chartType: string): Promi
             graphData[1].dataPoints.push(new TimeSeriesPoint(chartDataPoint.date, chartDataPoint.sma_200));
         });
     });
+    console.log(graphData);
     return graphData;
 }

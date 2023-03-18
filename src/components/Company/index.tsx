@@ -15,8 +15,6 @@ const CompanyCard: React.FC<CompanyCardProps> = ({symbol}) => {
         });
     }, [symbol]);
 
-
-
     return (
         <>
             {stock.symbol && (
