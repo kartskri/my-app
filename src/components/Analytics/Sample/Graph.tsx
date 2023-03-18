@@ -1,6 +1,6 @@
 import React from "react";
 import SingleGraph from "./SingleGraph";
-import {Company, SMA, TimeSeriesPoint} from "../../../data/models";
+import {Company, TimeSeriesPoint} from "../../../data/models";
 import {techSMAChartData} from "../../../services/api";
 import MultiGraph from "./MultiGraph";
 
