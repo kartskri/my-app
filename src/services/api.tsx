@@ -1,5 +1,15 @@
 import axios, {AxiosResponse} from 'axios';
-import {Bollinger, Exponential, RSI, SMA, Stock, StockOverview, StockQuote, TimeSeriesPoint} from "../data/models";
+import {
+    Bollinger,
+    Exponential,
+    IncomeStatement,
+    RSI,
+    SMA,
+    Stock,
+    StockOverview,
+    StockQuote,
+    TimeSeriesPoint
+} from "../data/models";
 import {API_URL} from "../constants";
 
 export const fetchStocks = async (): Promise<Stock[]> => {
@@ -82,6 +92,8 @@ export const techRSAChartData = async (symbol: string): Promise<TimeSeriesPoint[
 }
 
 export const stockQuote = async (symbol: string): Promise<StockQuote[]> => {
+    symbol = 'MMM';
+    console.log(API_URL + '/quote/' + symbol + '/dates/2022-09-01/2022-12-31');
     const response: AxiosResponse<StockQuote[]> = await axios.get(API_URL + '/quote/' + symbol + '/dates/2022-09-01/2020-12-31');
     return response.data;
 }
@@ -94,4 +106,14 @@ export const stockQuoteChartData = async (symbol: string): Promise<TimeSeriesPoi
         });
         return graphData;
     });
+}
+
+export const yearlyIncomeStatements = async (symbol: string): Promise<IncomeStatement[]> => {
+    const response: AxiosResponse<IncomeStatement[]> = await axios.get(API_URL + '/fin/statements/' + symbol + '/YEAR');
+    return response.data;
+}
+
+export const quarterlyIncomeStatements = async (symbol: string): Promise<IncomeStatement[]> => {
+    const response: AxiosResponse<IncomeStatement[]> = await axios.get(API_URL + '/fin/statements/' + symbol + '/QUARTER');
+    return response.data;
 }

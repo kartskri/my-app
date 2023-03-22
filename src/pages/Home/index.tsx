@@ -7,6 +7,9 @@ import Graph from "../../components/Analytics/Sample/Graph";
 import FinTechSnapshot from "../../components/FinTechSnapshot";
 import {Company} from "../../data/models";
 import StockPicker from "../../components/StocksAutocomplete";
+import YearlyIncomeStatement from "../../components/Finances/YearlyIncomeStatement";
+import QuarterlyIncomeStatement from "../../components/Finances/QuarterlyIncomeStatement";
+import Quote from "../../components/Quote";
 
 const Home: React.FC = () => {
     const [company, setCompany] = React.useState<Company>({symbol: 'AAPL', company: 'Apple Inc.'});
@@ -28,6 +31,9 @@ const Home: React.FC = () => {
                     <Col md={8} className="p-3">
                         <StockPicker title={"Select a stock"} companyChanged={handleCompanyChange}/>
                         <br/>
+                        <Quote symbol={company.symbol} />
+                        <YearlyIncomeStatement symbol={company.symbol}></YearlyIncomeStatement>
+                        <QuarterlyIncomeStatement symbol={company.symbol}></QuarterlyIncomeStatement>
                         <Graph company={company} />
                         <hr/>
                     </Col>

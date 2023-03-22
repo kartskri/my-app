@@ -55,6 +55,39 @@ export interface StockOverview {
     ex_dividend_date: string;
 }
 
+export interface IncomeStatement {
+    id: number;
+    comprehensive_income_net_of_tax: number;
+    cost_of_revenue: number;
+    costof_goods_and_services_sold: number;
+    depreciation: number;
+    depreciation_and_amortization: number;
+    ebit: number;
+    ebitda: number;
+    fiscal_date_ending: string;
+    gross_profit: number;
+    income_before_tax: number;
+    income_tax_expense: number;
+    interest_and_debt_expense: number;
+    interest_expense: number;
+    interest_income: number;
+    investment_income_net: number;
+    net_income: number;
+    net_income_from_continuing_operations: number;
+    net_interest_income: number;
+    non_interest_income: number;
+    operating_expenses: number;
+    operating_income: number;
+    other_non_operating_income: number;
+    report_type: string;
+    reported_currency: number;
+    research_and_development: number;
+    selling_general_and_administrative: number;
+    symbol: string;
+    total_revenue: number;
+    stock_symbol: string;
+}
+
 export interface Company {
     symbol: string;
     company: string;
@@ -101,7 +134,7 @@ export interface StockQuote {
     high: number
     low: number
     open: number
-    splitCoeff: number
+    split_coeff: number
     symbol: string
     volume: number
 }
