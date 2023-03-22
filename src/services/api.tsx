@@ -93,8 +93,9 @@ export const techRSAChartData = async (symbol: string): Promise<TimeSeriesPoint[
 
 export const stockQuote = async (symbol: string): Promise<StockQuote[]> => {
     symbol = 'MMM';
-    console.log(API_URL + '/quote/' + symbol + '/dates/2022-09-01/2022-12-31');
-    const response: AxiosResponse<StockQuote[]> = await axios.get(API_URL + '/quote/' + symbol + '/dates/2022-09-01/2020-12-31');
+    const apiUrl = (API_URL + '/quote/' + symbol + '/dates/2022-05-01/2022-12-20');
+    const response: AxiosResponse<any[]> = await axios.get(apiUrl);
+    console.log(response);
     return response.data;
 }
 

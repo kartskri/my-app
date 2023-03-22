@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {stockQuote} from "../../services/api";
-import {StockQuote} from "../../data/models";
+import {stockQuote, stockQuoteChartData} from "../../services/api";
+import {StockQuote, TimeSeriesPoint} from "../../data/models";
 
 interface StockQuoteProps {
     symbol: string;
@@ -11,8 +11,11 @@ const Quote: React.FC<StockQuoteProps> = ({symbol}) => {
 
     React.useEffect(() => {
         stockQuote(symbol).then(data => {
-            console.log(data);
             setQuotes(data);
+        });
+
+        stockQuoteChartData(symbol).then((points: TimeSeriesPoint[][]) => {
+
         });
     }, [symbol]);
 
